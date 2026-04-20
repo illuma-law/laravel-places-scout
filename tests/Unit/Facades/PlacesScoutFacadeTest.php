@@ -36,8 +36,9 @@ it('can perform text search via facade', function (): void {
 
     $response = PlacesScout::textSearch('Google Australia');
 
+    expect($response)->not->toBeNull();
+    /** @var PlaceSearchResponse $response */
     expect($response)
-        ->toBeInstanceOf(PlaceSearchResponse::class)
         ->and($response->results[0]->name)->toBe('Google Australia');
 });
 
@@ -54,8 +55,9 @@ it('can get place details via facade', function (): void {
 
     $details = PlacesScout::getPlaceDetails('ChIJN1t_tDeuEmsRUsoyG83frY4');
 
+    expect($details)->not->toBeNull();
+    /** @var PlaceDetails $details */
     expect($details)
-        ->toBeInstanceOf(PlaceDetails::class)
         ->and($details->name)->toBe('Google Australia');
 });
 
@@ -69,7 +71,7 @@ it('can use fluent withApiKey via facade', function (): void {
 
     PlacesScout::withApiKey('custom_key')->textSearch('query');
 
-    Http::assertSent(function ($request): bool {
+    Http::assertSent(function (Illuminate\Http\Client\Request $request): bool {
         return $request->data()['key'] === 'custom_key';
     });
 });
@@ -84,7 +86,7 @@ it('uses configured api key by default', function (): void {
 
     PlacesScout::textSearch('query');
 
-    Http::assertSent(function ($request): bool {
+    Http::assertSent(function (Illuminate\Http\Client\Request $request): bool {
         return $request->data()['key'] === 'test_api_key';
     });
 });
@@ -102,7 +104,7 @@ it('has correct facade docblock methods', function (): void {
     $reflection = new ReflectionClass(PlacesScout::class);
     $docComment = $reflection->getDocComment();
 
-    expect($docComment)
+    expect((string) $docComment)
         ->toContain('textSearch')
         ->toContain('getPlaceDetails')
         ->toContain('withApiKey')
@@ -129,5 +131,5 @@ it('can chain methods after withApiKey', function (): void {
     $result = PlacesScout::withApiKey('chained_key')->getPlaceDetails('place_123');
 
     expect($result)->toBeInstanceOf(PlaceDetails::class);
-    Http::assertSent(fn ($request): bool => $request->data()['key'] === 'chained_key');
+    Http::assertSent(fn (Illuminate\Http\Client\Request $request): bool => $request->data()['key'] === 'chained_key');
 });

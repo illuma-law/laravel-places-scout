@@ -112,5 +112,46 @@ it('has correct class structure', function (): void {
     expect(PlaceSearchResult::class)
         ->toBeReadonly()
         ->toHaveConstructor()
-        ->toHaveMethod('fromArray');
+        ->toHaveMethod('fromArray')
+        ->toHaveMethod('toArray');
+});
+
+it('toArray returns snake_case array', function (): void {
+    $data = [
+        'place_id'           => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+        'name'               => 'Google Australia',
+        'formatted_address'  => '48 Pirrama Rd, Pyrmont NSW 2009, Australia',
+        'rating'             => 4.4,
+        'user_ratings_total' => 123,
+        'geometry'           => ['location' => ['lat' => -33.866651, 'lng' => 151.195827]],
+    ];
+
+    $result = PlaceSearchResult::fromArray($data);
+
+    expect($result->toArray())->toBe([
+        'place_id'           => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+        'name'               => 'Google Australia',
+        'formatted_address'  => '48 Pirrama Rd, Pyrmont NSW 2009, Australia',
+        'rating'             => 4.4,
+        'user_ratings_total' => 123,
+        'latitude'           => -33.866651,
+        'longitude'          => 151.195827,
+    ]);
+});
+
+it('toArray returns nulls for missing optional fields', function (): void {
+    $result = PlaceSearchResult::fromArray([
+        'place_id' => 'abc',
+        'name'     => 'Minimal',
+    ]);
+
+    expect($result->toArray())->toBe([
+        'place_id'           => 'abc',
+        'name'               => 'Minimal',
+        'formatted_address'  => null,
+        'rating'             => null,
+        'user_ratings_total' => null,
+        'latitude'           => null,
+        'longitude'          => null,
+    ]);
 });

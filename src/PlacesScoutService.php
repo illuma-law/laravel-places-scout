@@ -27,8 +27,14 @@ final class PlacesScoutService
         return $this;
     }
 
-    public function textSearch(string $query, ?string $pageToken = null): ?PlaceSearchResponse
-    {
+    public function textSearch(
+        string $query,
+        ?string $pageToken = null,
+        ?string $location = null,
+        ?int $radius = null,
+        ?string $type = null,
+        ?string $language = null,
+    ): ?PlaceSearchResponse {
         $params = [
             'query' => $query,
             'key'   => $this->apiKey,
@@ -36,6 +42,22 @@ final class PlacesScoutService
 
         if ($pageToken) {
             $params['pagetoken'] = $pageToken;
+        }
+
+        if ($location) {
+            $params['location'] = $location;
+        }
+
+        if ($radius !== null) {
+            $params['radius'] = $radius;
+        }
+
+        if ($type) {
+            $params['type'] = $type;
+        }
+
+        if ($language) {
+            $params['language'] = $language;
         }
 
         $response = Http::get("{$this->baseUrl}/textsearch/json", $params);
@@ -60,11 +82,11 @@ final class PlacesScoutService
         return PlaceSearchResponse::fromArray($data);
     }
 
-    public function getPlaceDetails(string $placeId): ?PlaceDetails
+    public function getPlaceDetails(string $placeId, ?string $fields = null): ?PlaceDetails
     {
         $response = Http::get("{$this->baseUrl}/details/json", [
             'place_id' => $placeId,
-            'fields'   => 'name,formatted_address,formatted_phone_number,website,rating,user_ratings_total,geometry',
+            'fields'   => $fields ?? config('places-scout.details_fields', 'name,formatted_address,formatted_phone_number,website,rating,user_ratings_total,geometry'),
             'key'      => $this->apiKey,
         ]);
 

@@ -26,11 +26,10 @@ it('creates place search response from array with results', function (): void {
 
     $response = PlaceSearchResponse::fromArray($data);
 
-    expect($response)
-        ->results->toHaveCount(1)
-        ->results->each->toBeInstanceOf(PlaceSearchResult::class)
-        ->nextPageToken->toBe('next_token_123')
-        ->status->toBe('OK');
+    expect($response->results)->toHaveCount(1);
+    expect($response->results[0])->not->toBeNull();
+    expect($response->nextPageToken)->toBe('next_token_123');
+    expect($response->status)->toBe('OK');
 });
 
 it('creates place search response from array with multiple results', function (): void {

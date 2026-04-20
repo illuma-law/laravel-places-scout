@@ -40,4 +40,22 @@ final readonly class PlaceSearchResult
             longitude: is_array($location) && isset($location['lng']) && is_numeric($location['lng']) ? (float) $location['lng'] : null,
         );
     }
+
+    /**
+     * Return a snake_case array suitable for Eloquent fill or updateOrCreate.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(): array
+    {
+        return [
+            'place_id'           => $this->placeId,
+            'name'               => $this->name,
+            'formatted_address'  => $this->formattedAddress,
+            'rating'             => $this->rating,
+            'user_ratings_total' => $this->userRatingsTotal,
+            'latitude'           => $this->latitude,
+            'longitude'          => $this->longitude,
+        ];
+    }
 }

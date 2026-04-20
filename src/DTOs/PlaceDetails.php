@@ -42,4 +42,56 @@ final readonly class PlaceDetails
             longitude: is_array($location) && isset($location['lng']) && is_numeric($location['lng']) ? (float) $location['lng'] : null,
         );
     }
+
+    /**
+     * Build a PlaceDetails from a search result, mapping available fields.
+     * Phone number and website are not available in search results and will be null.
+     */
+    public static function fromSearchResult(PlaceSearchResult $result): self
+    {
+        return new self(
+            name: $result->name,
+            formattedAddress: $result->formattedAddress,
+            rating: $result->rating,
+            userRatingsTotal: $result->userRatingsTotal,
+            latitude: $result->latitude,
+            longitude: $result->longitude,
+        );
+    }
+
+    /**
+     * Return a new instance with null fields filled from the search result fallback.
+     */
+    public function mergeWith(PlaceSearchResult $fallback): static
+    {
+        return new static(
+            name: $this->name !== '' ? $this->name : $fallback->name,
+            formattedAddress: $this->formattedAddress ?? $fallback->formattedAddress,
+            phoneNumber: $this->phoneNumber,
+            website: $this->website,
+            rating: $this->rating ?? $fallback->rating,
+            userRatingsTotal: $this->userRatingsTotal ?? $fallback->userRatingsTotal,
+            latitude: $this->latitude ?? $fallback->latitude,
+            longitude: $this->longitude ?? $fallback->longitude,
+        );
+    }
+
+    /**
+     * Return a snake_case array suitable for Eloquent fill or updateOrCreate.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(): array
+    {
+        return [
+            'name'               => $this->name,
+            'formatted_address'  => $this->formattedAddress,
+            'phone_number'       => $this->phoneNumber,
+            'website'            => $this->website,
+            'rating'             => $this->rating,
+            'user_ratings_total' => $this->userRatingsTotal,
+            'latitude'           => $this->latitude,
+            'longitude'          => $this->longitude,
+        ];
+    }
 }

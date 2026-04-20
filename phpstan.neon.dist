@@ -1,0 +1,13 @@
+parameters:
+    paths:
+        - src
+        - tests
+
+    level: 5
+
+    excludePaths:
+        - vendor
+
+    ignoreErrors:
+        # Pest expectation chaining causes false positives
+        - '#Access to an undefined property Pest\\Mixins\\Expectation#'

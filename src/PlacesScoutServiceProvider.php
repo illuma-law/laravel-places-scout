@@ -21,9 +21,12 @@ class PlacesScoutServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
-        $this->app->singleton('places-scout', function ($app): PlacesScoutService {
+        $this->app->singleton('places-scout', function (\Illuminate\Foundation\Application $app): PlacesScoutService {
+            /** @var \Illuminate\Contracts\Config\Repository $config */
+            $config = $app->make('config');
+
             /** @var string|null $apiKey */
-            $apiKey = $app['config']->get('places-scout.api_key');
+            $apiKey = $config->get('places-scout.api_key');
 
             return new PlacesScoutService($apiKey);
         });

@@ -56,6 +56,7 @@ final class PlacesScoutService
             return null;
         }
 
+        /** @var array<string, mixed> $data */
         return PlaceSearchResponse::fromArray($data);
     }
 
@@ -67,7 +68,9 @@ final class PlacesScoutService
             'key'      => $this->apiKey,
         ]);
 
-        if ($response->failed() || ! isset($response->json()['result'])) {
+        $data = $response->json();
+
+        if ($response->failed() || ! is_array($data) || ! isset($data['result'])) {
             Log::error('Google Places API getPlaceDetails failed', [
                 'status'   => $response->status(),
                 'body'     => $response->body(),
@@ -77,6 +80,9 @@ final class PlacesScoutService
             return null;
         }
 
-        return PlaceDetails::fromArray($response->json()['result']);
+        /** @var array<string, mixed> $result */
+        $result = $data['result'];
+
+        return PlaceDetails::fromArray($result);
     }
 }

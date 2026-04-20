@@ -1,13 +1,11 @@
+includes:
+    - phpstan-baseline.neon
+
 parameters:
+    level: max
     paths:
         - src
-        - tests
-
-    level: 5
-
-    excludePaths:
-        - vendor
-
-    ignoreErrors:
-        # Pest expectation chaining causes false positives
-        - '#Access to an undefined property Pest\\Mixins\\Expectation#'
+    tmpDir: build/phpstan
+    checkOctaneCompatibility: true
+    checkModelProperties: true
+    reportUnmatchedIgnoredErrors: false

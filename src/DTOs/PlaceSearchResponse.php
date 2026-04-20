@@ -18,15 +18,26 @@ final readonly class PlaceSearchResponse
         public ?string $status = null,
     ) {}
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public static function fromArray(array $data): self
     {
+        /** @var mixed $results */
+        $results = $data['results'] ?? [];
+
         return new self(
             results: array_map(
-                fn (array $result) => PlaceSearchResult::fromArray($result),
-                $data['results'] ?? []
+                function (mixed $result): PlaceSearchResult {
+                    /** @var array<string, mixed> $resultArr */
+                    $resultArr = is_array($result) ? $result : [];
+
+                    return PlaceSearchResult::fromArray($resultArr);
+                },
+                is_array($results) ? $results : []
             ),
-            nextPageToken: $data['next_page_token'] ?? null,
-            status: $data['status'] ?? null,
+            nextPageToken: is_string($data['next_page_token'] ?? null) ? (string) $data['next_page_token'] : null,
+            status: is_string($data['status'] ?? null) ? (string) $data['status'] : null,
         );
     }
 }

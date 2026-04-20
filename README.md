@@ -8,6 +8,20 @@
 
 A fluent Laravel package for interacting with the Google Places API with strongly typed DTOs.
 
+## TL;DR
+
+```php
+use IllumaLaw\PlacesScout\Facades\PlacesScout;
+
+// Search for places using a text query
+$response = PlacesScout::textSearch('Law firms in New York');
+
+foreach ($response->results as $result) {
+    echo $result->name;
+    echo $result->formattedAddress;
+}
+```
+
 ## Features
 
 - 🔍 **Text Search**: Search for places using text queries with pagination support
@@ -16,12 +30,12 @@ A fluent Laravel package for interacting with the Google Places API with strongl
 - 🔄 **Fluent Interface**: Chain methods for clean, readable code
 - 🔐 **Configurable API Keys**: Use global config or override per-request
 - 🧪 **100% Test Coverage**: Comprehensive test suite with Pest
-- 📊 **PHPStan Level 5**: Static analysis for maximum code quality
-- ⚡ **PHP 8.5+**: Leverages modern PHP features like readonly classes and named arguments
+- 📊 **PHPStan Level max**: Static analysis for maximum code quality
+- ⚡ **PHP 8.3+**: Leverages modern PHP features like readonly classes and named arguments
 
 ## Requirements
 
-- PHP 8.5 or higher
+- PHP 8.3 or higher
 - Laravel 11.x, 12.x, or 13.x
 
 ## Installation
@@ -246,7 +260,7 @@ The package follows strict architectural principles:
 
 - **Readonly DTOs**: All data objects are immutable `final readonly` classes
 - **Strict Types**: All files use `declare(strict_types=1)`
-- **Static Analysis**: PHPStan Level 5 compliance with Larastan
+- **Static Analysis**: PHPStan Level max compliance with Larastan
 - **Code Style**: Laravel Pint for consistent formatting
 - **Architecture Tests**: Pest architecture tests enforce dependency rules
 
@@ -261,7 +275,7 @@ Contributions are welcome! Please see [CONTRIBUTING](CONTRIBUTING.md) for detail
 ### Development Setup
 
 1. Fork the repository
-2. Clone your fork: `git clone https://github.com/your-username/laravel-places-scout.git`
+2. Clone your fork: `git clone https://github.com/illuma-law/laravel-places-scout.git`
 3. Install dependencies: `composer install`
 4. Run tests: `composer test`
 5. Run static analysis: `composer analyse`
@@ -269,7 +283,7 @@ Contributions are welcome! Please see [CONTRIBUTING](CONTRIBUTING.md) for detail
 
 ### Reporting Issues
 
-If you discover any security-related issues, please email ai@illuma.law instead of using the issue tracker.
+If you discover any security-related issues, please email support@illuma.law instead of using the issue tracker.
 
 ## Security Vulnerabilities
 
@@ -277,7 +291,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [Illuma Law AI](https://github.com/illuma-law)
+- [illuma-law](https://github.com/illuma-law)
 - [All Contributors](../../contributors)
 
 This package is built on top of excellent open-source software:
@@ -291,4 +305,4 @@ This package is built on top of excellent open-source software:
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-Copyright (c) 2026 Illuma Law AI
+Copyright (c) 2026 illuma-law

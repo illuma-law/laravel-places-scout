@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use IllumaLaw\PlacesScout\DTOs\PlaceDetails;
+use IllumaLaw\PlacesScout\DTOs\PlaceSearchResult;
 
 it('creates place details from array with all fields', function (): void {
     $data = [
@@ -182,7 +183,7 @@ it('has correct class structure', function (): void {
 });
 
 it('creates place details from search result', function (): void {
-    $result = new \IllumaLaw\PlacesScout\DTOs\PlaceSearchResult(
+    $result = new PlaceSearchResult(
         placeId: 'place-abc',
         name: 'Test Firm',
         formattedAddress: 'Rua Teste 1, Lisbon',
@@ -207,12 +208,12 @@ it('creates place details from search result', function (): void {
 
 it('mergeWith fills null fields from search result fallback', function (): void {
     $details = PlaceDetails::fromArray([
-        'name'                   => 'Full Details',
+        'name' => 'Full Details',
         'formatted_phone_number' => '+351 910 000 000',
-        'website'                => 'https://example.pt',
+        'website' => 'https://example.pt',
     ]);
 
-    $result = new \IllumaLaw\PlacesScout\DTOs\PlaceSearchResult(
+    $result = new PlaceSearchResult(
         placeId: 'place-abc',
         name: 'Search Name',
         formattedAddress: 'Rua Fallback 2',
@@ -237,14 +238,14 @@ it('mergeWith fills null fields from search result fallback', function (): void 
 
 it('mergeWith uses details fields when they are set', function (): void {
     $details = PlaceDetails::fromArray([
-        'name'                   => 'Detailed Name',
-        'formatted_address'      => 'Rua Detalhada 5',
-        'rating'                 => 4.9,
-        'user_ratings_total'     => 300,
-        'geometry'               => ['location' => ['lat' => 39.0, 'lng' => -7.5]],
+        'name' => 'Detailed Name',
+        'formatted_address' => 'Rua Detalhada 5',
+        'rating' => 4.9,
+        'user_ratings_total' => 300,
+        'geometry' => ['location' => ['lat' => 39.0, 'lng' => -7.5]],
     ]);
 
-    $result = new \IllumaLaw\PlacesScout\DTOs\PlaceSearchResult(
+    $result = new PlaceSearchResult(
         placeId: 'place-xyz',
         name: 'Ignored Name',
         formattedAddress: 'Ignored Address',
@@ -268,7 +269,7 @@ it('mergeWith uses details fields when they are set', function (): void {
 it('mergeWith returns a new instance and does not mutate original', function (): void {
     $details = PlaceDetails::fromArray(['name' => 'Original']);
 
-    $result = new \IllumaLaw\PlacesScout\DTOs\PlaceSearchResult(
+    $result = new PlaceSearchResult(
         placeId: 'p',
         name: 'Result',
         rating: 5.0,
@@ -283,24 +284,24 @@ it('mergeWith returns a new instance and does not mutate original', function ():
 
 it('toArray returns snake_case array', function (): void {
     $details = PlaceDetails::fromArray([
-        'name'                   => 'Test Firm',
-        'formatted_address'      => 'Rua 1',
+        'name' => 'Test Firm',
+        'formatted_address' => 'Rua 1',
         'formatted_phone_number' => '+351 900 000 000',
-        'website'                => 'https://test.pt',
-        'rating'                 => 4.1,
-        'user_ratings_total'     => 12,
-        'geometry'               => ['location' => ['lat' => 38.5, 'lng' => -9.0]],
+        'website' => 'https://test.pt',
+        'rating' => 4.1,
+        'user_ratings_total' => 12,
+        'geometry' => ['location' => ['lat' => 38.5, 'lng' => -9.0]],
     ]);
 
     expect($details->toArray())->toBe([
-        'name'               => 'Test Firm',
-        'formatted_address'  => 'Rua 1',
-        'phone_number'       => '+351 900 000 000',
-        'website'            => 'https://test.pt',
-        'rating'             => 4.1,
+        'name' => 'Test Firm',
+        'formatted_address' => 'Rua 1',
+        'phone_number' => '+351 900 000 000',
+        'website' => 'https://test.pt',
+        'rating' => 4.1,
         'user_ratings_total' => 12,
-        'latitude'           => 38.5,
-        'longitude'          => -9.0,
+        'latitude' => 38.5,
+        'longitude' => -9.0,
     ]);
 });
 
@@ -308,13 +309,13 @@ it('toArray returns nulls for missing optional fields', function (): void {
     $details = PlaceDetails::fromArray(['name' => 'Minimal']);
 
     expect($details->toArray())->toBe([
-        'name'               => 'Minimal',
-        'formatted_address'  => null,
-        'phone_number'       => null,
-        'website'            => null,
-        'rating'             => null,
+        'name' => 'Minimal',
+        'formatted_address' => null,
+        'phone_number' => null,
+        'website' => null,
+        'rating' => null,
         'user_ratings_total' => null,
-        'latitude'           => null,
-        'longitude'          => null,
+        'latitude' => null,
+        'longitude' => null,
     ]);
 });

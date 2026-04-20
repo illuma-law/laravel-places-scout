@@ -5,6 +5,7 @@ declare(strict_types=1);
 use IllumaLaw\PlacesScout\DTOs\PlaceDetails;
 use IllumaLaw\PlacesScout\DTOs\PlaceSearchResponse;
 use IllumaLaw\PlacesScout\PlacesScoutService;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -19,13 +20,13 @@ it('can be instantiated with api key', function (): void {
 });
 
 it('can be instantiated without api key', function (): void {
-    $service = new PlacesScoutService();
+    $service = new PlacesScoutService;
 
     expect($service)->not->toBeNull();
 });
 
 it('can set api key fluently with withApiKey', function (): void {
-    $service = new PlacesScoutService();
+    $service = new PlacesScoutService;
 
     $result = $service->withApiKey('new_api_key');
 
@@ -33,7 +34,7 @@ it('can set api key fluently with withApiKey', function (): void {
 });
 
 it('returns same instance when calling withApiKey', function (): void {
-    $service = new PlacesScoutService();
+    $service = new PlacesScoutService;
 
     $result = $service->withApiKey('new_api_key');
 
@@ -81,7 +82,7 @@ it('performs text search with page token', function (): void {
     $service = new PlacesScoutService('test_key');
     $service->textSearch('query', 'page_token_123');
 
-    Http::assertSent(function (\Illuminate\Http\Client\Request $request): bool {
+    Http::assertSent(function (Request $request): bool {
         return str_contains($request->url(), 'maps.googleapis.com/maps/api/place/textsearch/json')
             && $request->data()['pagetoken'] === 'page_token_123'
             && $request->data()['query'] === 'query'
@@ -100,7 +101,7 @@ it('performs text search without page token', function (): void {
     $service = new PlacesScoutService('test_key');
     $service->textSearch('query');
 
-    Http::assertSent(function (\Illuminate\Http\Client\Request $request): bool {
+    Http::assertSent(function (Request $request): bool {
         $data = $request->data();
 
         return str_contains($request->url(), 'maps.googleapis.com/maps/api/place/textsearch/json')
@@ -126,7 +127,7 @@ it('returns null when text search fails with http error', function (): void {
 it('logs error when text search fails', function (): void {
     Log::shouldReceive('error')
         ->once()
-        ->with('Google Places API textSearch failed', \Mockery::on(function (mixed $context): bool {
+        ->with('Google Places API textSearch failed', Mockery::on(function (mixed $context): bool {
             return is_array($context)
                 && isset($context['status']) && $context['status'] === 500
                 && isset($context['body']) && $context['body'] === '{"error":"Some error"}'
@@ -193,7 +194,7 @@ it('sends correct fields parameter for place details', function (): void {
     $service = new PlacesScoutService('test_key');
     $service->getPlaceDetails('place_123');
 
-    Http::assertSent(function (\Illuminate\Http\Client\Request $request): bool {
+    Http::assertSent(function (Request $request): bool {
         $data = $request->data();
 
         return str_contains($request->url(), 'maps.googleapis.com/maps/api/place/details/json')
@@ -232,7 +233,7 @@ it('returns null when place details result is missing', function (): void {
 it('logs error when place details fails', function (): void {
     Log::shouldReceive('error')
         ->once()
-        ->with('Google Places API getPlaceDetails failed', \Mockery::on(function (array $context): bool {
+        ->with('Google Places API getPlaceDetails failed', Mockery::on(function (array $context): bool {
             return $context['status'] === 500
                 && $context['place_id'] === 'place_123';
         }));
@@ -256,7 +257,7 @@ it('uses injected api key from constructor', function (): void {
     $service = new PlacesScoutService('constructor_key');
     $service->textSearch('query');
 
-    Http::assertSent(function (\Illuminate\Http\Client\Request $request): bool {
+    Http::assertSent(function (Request $request): bool {
         return $request->data()['key'] === 'constructor_key';
     });
 });
@@ -273,7 +274,7 @@ it('uses api key set via withApiKey over constructor key', function (): void {
     $service->withApiKey('fluent_key');
     $service->textSearch('query');
 
-    Http::assertSent(function (\Illuminate\Http\Client\Request $request): bool {
+    Http::assertSent(function (Request $request): bool {
         return $request->data()['key'] === 'fluent_key';
     });
 });
@@ -321,7 +322,7 @@ it('passes location and radius to text search', function (): void {
     $service = new PlacesScoutService('test_key');
     $service->textSearch('lawyers', location: '38.7,-9.1', radius: 5000);
 
-    Http::assertSent(function (\Illuminate\Http\Client\Request $request): bool {
+    Http::assertSent(function (Request $request): bool {
         $data = $request->data();
 
         return $data['location'] === '38.7,-9.1'
@@ -337,7 +338,7 @@ it('passes type and language to text search', function (): void {
     $service = new PlacesScoutService('test_key');
     $service->textSearch('lawyers', type: 'lawyer', language: 'pt');
 
-    Http::assertSent(function (\Illuminate\Http\Client\Request $request): bool {
+    Http::assertSent(function (Request $request): bool {
         $data = $request->data();
 
         return $data['type'] === 'lawyer' && $data['language'] === 'pt';
@@ -352,7 +353,7 @@ it('omits optional text search params when not provided', function (): void {
     $service = new PlacesScoutService('test_key');
     $service->textSearch('query');
 
-    Http::assertSent(function (\Illuminate\Http\Client\Request $request): bool {
+    Http::assertSent(function (Request $request): bool {
         $data = $request->data();
 
         return ! isset($data['location'])
@@ -370,7 +371,7 @@ it('sends custom fields parameter for place details', function (): void {
     $service = new PlacesScoutService('test_key');
     $service->getPlaceDetails('place_123', 'name,opening_hours,types');
 
-    Http::assertSent(function (\Illuminate\Http\Client\Request $request): bool {
+    Http::assertSent(function (Request $request): bool {
         return $request->data()['fields'] === 'name,opening_hours,types';
     });
 });
@@ -385,7 +386,7 @@ it('uses config details_fields when no fields arg given', function (): void {
     $service = new PlacesScoutService('test_key');
     $service->getPlaceDetails('place_123');
 
-    Http::assertSent(function (\Illuminate\Http\Client\Request $request): bool {
+    Http::assertSent(function (Request $request): bool {
         return $request->data()['fields'] === 'name,geometry';
     });
 });

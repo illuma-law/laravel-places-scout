@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use IllumaLaw\PlacesScout\DTOs\PlaceSearchResponse;
-use IllumaLaw\PlacesScout\DTOs\PlaceSearchResult;
 
 it('creates place search response from array with results', function (): void {
     $data = [

@@ -20,7 +20,7 @@ final readonly class PlaceSearchResult
     ) {}
 
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public static function fromArray(array $data): self
     {
@@ -49,13 +49,13 @@ final readonly class PlaceSearchResult
     public function toArray(): array
     {
         return [
-            'place_id'           => $this->placeId,
-            'name'               => $this->name,
-            'formatted_address'  => $this->formattedAddress,
-            'rating'             => $this->rating,
+            'place_id' => $this->placeId,
+            'name' => $this->name,
+            'formatted_address' => $this->formattedAddress,
+            'rating' => $this->rating,
             'user_ratings_total' => $this->userRatingsTotal,
-            'latitude'           => $this->latitude,
-            'longitude'          => $this->longitude,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
         ];
     }
 }

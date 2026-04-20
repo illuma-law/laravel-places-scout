@@ -6,6 +6,7 @@ use IllumaLaw\PlacesScout\DTOs\PlaceDetails;
 use IllumaLaw\PlacesScout\DTOs\PlaceSearchResponse;
 use IllumaLaw\PlacesScout\Facades\PlacesScout;
 use IllumaLaw\PlacesScout\PlacesScoutService;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 
 it('resolves facade to service instance', function (): void {
@@ -71,7 +72,7 @@ it('can use fluent withApiKey via facade', function (): void {
 
     PlacesScout::withApiKey('custom_key')->textSearch('query');
 
-    Http::assertSent(function (Illuminate\Http\Client\Request $request): bool {
+    Http::assertSent(function (Request $request): bool {
         return $request->data()['key'] === 'custom_key';
     });
 });
@@ -86,7 +87,7 @@ it('uses configured api key by default', function (): void {
 
     PlacesScout::textSearch('query');
 
-    Http::assertSent(function (Illuminate\Http\Client\Request $request): bool {
+    Http::assertSent(function (Request $request): bool {
         return $request->data()['key'] === 'test_api_key';
     });
 });
@@ -131,5 +132,5 @@ it('can chain methods after withApiKey', function (): void {
     $result = PlacesScout::withApiKey('chained_key')->getPlaceDetails('place_123');
 
     expect($result)->toBeInstanceOf(PlaceDetails::class);
-    Http::assertSent(fn (Illuminate\Http\Client\Request $request): bool => $request->data()['key'] === 'chained_key');
+    Http::assertSent(fn (Request $request): bool => $request->data()['key'] === 'chained_key');
 });

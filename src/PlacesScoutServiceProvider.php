@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace IllumaLaw\PlacesScout;
 
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Foundation\Application;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -21,8 +23,8 @@ class PlacesScoutServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
-        $this->app->singleton('places-scout', function (\Illuminate\Foundation\Application $app): PlacesScoutService {
-            /** @var \Illuminate\Contracts\Config\Repository $config */
+        $this->app->singleton('places-scout', function (Application $app): PlacesScoutService {
+            /** @var Repository $config */
             $config = $app->make('config');
 
             /** @var string|null $apiKey */

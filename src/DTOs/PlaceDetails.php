@@ -72,14 +72,14 @@ final readonly class PlaceDetails
     public function toArray(): array
     {
         return [
-            'name'               => $this->name,
-            'formatted_address'  => $this->formattedAddress,
-            'phone_number'       => $this->phoneNumber,
-            'website'            => $this->website,
-            'rating'             => $this->rating,
+            'name' => $this->name,
+            'formatted_address' => $this->formattedAddress,
+            'phone_number' => $this->phoneNumber,
+            'website' => $this->website,
+            'rating' => $this->rating,
             'user_ratings_total' => $this->userRatingsTotal,
-            'latitude'           => $this->latitude,
-            'longitude'          => $this->longitude,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
         ];
     }
 }

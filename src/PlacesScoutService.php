@@ -34,7 +34,7 @@ final class PlacesScoutService
     ): ?PlaceSearchResponse {
         $params = [
             'query' => $query,
-            'key'   => $this->apiKey,
+            'key' => $this->apiKey,
         ];
 
         if ($pageToken) {
@@ -62,8 +62,8 @@ final class PlacesScoutService
         if ($response->failed()) {
             Log::error('Google Places API textSearch failed', [
                 'status' => $response->status(),
-                'body'   => $response->body(),
-                'query'  => $query,
+                'body' => $response->body(),
+                'query' => $query,
             ]);
 
             return null;
@@ -83,16 +83,16 @@ final class PlacesScoutService
     {
         $response = Http::get("{$this->baseUrl}/details/json", [
             'place_id' => $placeId,
-            'fields'   => $fields ?? config('places-scout.details_fields', 'name,formatted_address,formatted_phone_number,website,rating,user_ratings_total,geometry'),
-            'key'      => $this->apiKey,
+            'fields' => $fields ?? config('places-scout.details_fields', 'name,formatted_address,formatted_phone_number,website,rating,user_ratings_total,geometry'),
+            'key' => $this->apiKey,
         ]);
 
         $data = $response->json();
 
         if ($response->failed() || ! is_array($data) || ! isset($data['result'])) {
             Log::error('Google Places API getPlaceDetails failed', [
-                'status'   => $response->status(),
-                'body'     => $response->body(),
+                'status' => $response->status(),
+                'body' => $response->body(),
                 'place_id' => $placeId,
             ]);
 

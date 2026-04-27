@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace IllumaLaw\PlacesScout\DTOs;
 
-/**
- * Data Transfer Object for Google Place Details.
- */
 final readonly class PlaceDetails
 {
     public function __construct(
@@ -43,10 +40,6 @@ final readonly class PlaceDetails
         );
     }
 
-    /**
-     * Build a PlaceDetails from a search result, mapping available fields.
-     * Phone number and website are not available in search results and will be null.
-     */
     public static function fromSearchResult(PlaceSearchResult $result): self
     {
         return new self(
@@ -59,9 +52,6 @@ final readonly class PlaceDetails
         );
     }
 
-    /**
-     * Return a new instance with null fields filled from the search result fallback.
-     */
     public function mergeWith(PlaceSearchResult $fallback): static
     {
         return new self(
@@ -77,21 +67,19 @@ final readonly class PlaceDetails
     }
 
     /**
-     * Return a snake_case array suitable for Eloquent fill or updateOrCreate.
-     *
      * @return array<string, mixed>
      */
     public function toArray(): array
     {
         return [
-            'name' => $this->name,
-            'formatted_address' => $this->formattedAddress,
-            'phone_number' => $this->phoneNumber,
-            'website' => $this->website,
-            'rating' => $this->rating,
+            'name'               => $this->name,
+            'formatted_address'  => $this->formattedAddress,
+            'phone_number'       => $this->phoneNumber,
+            'website'            => $this->website,
+            'rating'             => $this->rating,
             'user_ratings_total' => $this->userRatingsTotal,
-            'latitude' => $this->latitude,
-            'longitude' => $this->longitude,
+            'latitude'           => $this->latitude,
+            'longitude'          => $this->longitude,
         ];
     }
 }

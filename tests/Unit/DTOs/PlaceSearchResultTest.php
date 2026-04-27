@@ -6,12 +6,12 @@ use IllumaLaw\PlacesScout\DTOs\PlaceSearchResult;
 
 it('creates place search result from array with all fields', function (): void {
     $data = [
-        'place_id' => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
-        'name' => 'Google Australia',
-        'formatted_address' => '48 Pirrama Rd, Pyrmont NSW 2009, Australia',
-        'rating' => 4.4,
+        'place_id'           => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+        'name'               => 'Google Australia',
+        'formatted_address'  => '48 Pirrama Rd, Pyrmont NSW 2009, Australia',
+        'rating'             => 4.4,
         'user_ratings_total' => 123,
-        'geometry' => [
+        'geometry'           => [
             'location' => [
                 'lat' => -33.866651,
                 'lng' => 151.195827,
@@ -34,7 +34,7 @@ it('creates place search result from array with all fields', function (): void {
 it('creates place search result from array with minimal fields', function (): void {
     $data = [
         'place_id' => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
-        'name' => 'Test Place',
+        'name'     => 'Test Place',
     ];
 
     $result = PlaceSearchResult::fromArray($data);
@@ -51,11 +51,11 @@ it('creates place search result from array with minimal fields', function (): vo
 
 it('handles zero values correctly', function (): void {
     $data = [
-        'place_id' => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
-        'name' => 'Test Place',
-        'rating' => 0,
+        'place_id'           => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+        'name'               => 'Test Place',
+        'rating'             => 0,
         'user_ratings_total' => 0,
-        'geometry' => [
+        'geometry'           => [
             'location' => [
                 'lat' => 0.0,
                 'lng' => 0.0,
@@ -74,11 +74,11 @@ it('handles zero values correctly', function (): void {
 
 it('converts numeric strings to correct types', function (): void {
     $data = [
-        'place_id' => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
-        'name' => 'Test Place',
-        'rating' => '4.5',
+        'place_id'           => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+        'name'               => 'Test Place',
+        'rating'             => '4.5',
         'user_ratings_total' => '100',
-        'geometry' => [
+        'geometry'           => [
             'location' => [
                 'lat' => '40.7128',
                 'lng' => '-74.0060',
@@ -98,7 +98,7 @@ it('converts numeric strings to correct types', function (): void {
 it('handles missing optional geometry gracefully', function (): void {
     $data = [
         'place_id' => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
-        'name' => 'Test Place',
+        'name'     => 'Test Place',
     ];
 
     $result = PlaceSearchResult::fromArray($data);
@@ -118,40 +118,40 @@ it('has correct class structure', function (): void {
 
 it('toArray returns snake_case array', function (): void {
     $data = [
-        'place_id' => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
-        'name' => 'Google Australia',
-        'formatted_address' => '48 Pirrama Rd, Pyrmont NSW 2009, Australia',
-        'rating' => 4.4,
+        'place_id'           => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+        'name'               => 'Google Australia',
+        'formatted_address'  => '48 Pirrama Rd, Pyrmont NSW 2009, Australia',
+        'rating'             => 4.4,
         'user_ratings_total' => 123,
-        'geometry' => ['location' => ['lat' => -33.866651, 'lng' => 151.195827]],
+        'geometry'           => ['location' => ['lat' => -33.866651, 'lng' => 151.195827]],
     ];
 
     $result = PlaceSearchResult::fromArray($data);
 
     expect($result->toArray())->toBe([
-        'place_id' => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
-        'name' => 'Google Australia',
-        'formatted_address' => '48 Pirrama Rd, Pyrmont NSW 2009, Australia',
-        'rating' => 4.4,
+        'place_id'           => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+        'name'               => 'Google Australia',
+        'formatted_address'  => '48 Pirrama Rd, Pyrmont NSW 2009, Australia',
+        'rating'             => 4.4,
         'user_ratings_total' => 123,
-        'latitude' => -33.866651,
-        'longitude' => 151.195827,
+        'latitude'           => -33.866651,
+        'longitude'          => 151.195827,
     ]);
 });
 
 it('toArray returns nulls for missing optional fields', function (): void {
     $result = PlaceSearchResult::fromArray([
         'place_id' => 'abc',
-        'name' => 'Minimal',
+        'name'     => 'Minimal',
     ]);
 
     expect($result->toArray())->toBe([
-        'place_id' => 'abc',
-        'name' => 'Minimal',
-        'formatted_address' => null,
-        'rating' => null,
+        'place_id'           => 'abc',
+        'name'               => 'Minimal',
+        'formatted_address'  => null,
+        'rating'             => null,
         'user_ratings_total' => null,
-        'latitude' => null,
-        'longitude' => null,
+        'latitude'           => null,
+        'longitude'          => null,
     ]);
 });

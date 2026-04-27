@@ -7,13 +7,13 @@ use IllumaLaw\PlacesScout\DTOs\PlaceSearchResult;
 
 it('creates place details from array with all fields', function (): void {
     $data = [
-        'name' => 'Google Australia',
-        'formatted_address' => '48 Pirrama Rd, Pyrmont NSW 2009, Australia',
+        'name'                   => 'Google Australia',
+        'formatted_address'      => '48 Pirrama Rd, Pyrmont NSW 2009, Australia',
         'formatted_phone_number' => '(02) 9374 4000',
-        'website' => 'https://www.google.com.au/',
-        'rating' => 4.4,
-        'user_ratings_total' => 123,
-        'geometry' => [
+        'website'                => 'https://www.google.com.au/',
+        'rating'                 => 4.4,
+        'user_ratings_total'     => 123,
+        'geometry'               => [
             'location' => [
                 'lat' => -33.866651,
                 'lng' => 151.195827,
@@ -54,7 +54,7 @@ it('creates place details from array with minimal fields', function (): void {
 
 it('creates place details with partial geometry', function (): void {
     $data = [
-        'name' => 'Test Place',
+        'name'     => 'Test Place',
         'geometry' => [
             'location' => [],
         ],
@@ -69,7 +69,7 @@ it('creates place details with partial geometry', function (): void {
 
 it('handles zero rating correctly', function (): void {
     $data = [
-        'name' => 'Test Place',
+        'name'   => 'Test Place',
         'rating' => 0,
     ];
 
@@ -80,7 +80,7 @@ it('handles zero rating correctly', function (): void {
 
 it('handles zero user ratings total correctly', function (): void {
     $data = [
-        'name' => 'Test Place',
+        'name'               => 'Test Place',
         'user_ratings_total' => 0,
     ];
 
@@ -91,7 +91,7 @@ it('handles zero user ratings total correctly', function (): void {
 
 it('handles zero latitude and longitude correctly', function (): void {
     $data = [
-        'name' => 'Test Place',
+        'name'     => 'Test Place',
         'geometry' => [
             'location' => [
                 'lat' => 0.0,
@@ -109,7 +109,7 @@ it('handles zero latitude and longitude correctly', function (): void {
 
 it('converts rating to float', function (): void {
     $data = [
-        'name' => 'Test Place',
+        'name'   => 'Test Place',
         'rating' => '4.5',
     ];
 
@@ -120,7 +120,7 @@ it('converts rating to float', function (): void {
 
 it('converts latitude and longitude to float', function (): void {
     $data = [
-        'name' => 'Test Place',
+        'name'     => 'Test Place',
         'geometry' => [
             'location' => [
                 'lat' => '40.7128',
@@ -143,13 +143,12 @@ it('is readonly and immutable', function (): void {
 
     $details = PlaceDetails::fromArray($data);
 
-    // Verify readonly by checking we can read but class is readonly
     expect($details->name)->toBe('Test Place');
 });
 
 it('handles empty geometry gracefully', function (): void {
     $data = [
-        'name' => 'Test Place',
+        'name'     => 'Test Place',
         'geometry' => [],
     ];
 
@@ -208,9 +207,9 @@ it('creates place details from search result', function (): void {
 
 it('mergeWith fills null fields from search result fallback', function (): void {
     $details = PlaceDetails::fromArray([
-        'name' => 'Full Details',
+        'name'                   => 'Full Details',
         'formatted_phone_number' => '+351 910 000 000',
-        'website' => 'https://example.pt',
+        'website'                => 'https://example.pt',
     ]);
 
     $result = new PlaceSearchResult(
@@ -238,11 +237,11 @@ it('mergeWith fills null fields from search result fallback', function (): void 
 
 it('mergeWith uses details fields when they are set', function (): void {
     $details = PlaceDetails::fromArray([
-        'name' => 'Detailed Name',
-        'formatted_address' => 'Rua Detalhada 5',
-        'rating' => 4.9,
+        'name'               => 'Detailed Name',
+        'formatted_address'  => 'Rua Detalhada 5',
+        'rating'             => 4.9,
         'user_ratings_total' => 300,
-        'geometry' => ['location' => ['lat' => 39.0, 'lng' => -7.5]],
+        'geometry'           => ['location' => ['lat' => 39.0, 'lng' => -7.5]],
     ]);
 
     $result = new PlaceSearchResult(
@@ -284,24 +283,24 @@ it('mergeWith returns a new instance and does not mutate original', function ():
 
 it('toArray returns snake_case array', function (): void {
     $details = PlaceDetails::fromArray([
-        'name' => 'Test Firm',
-        'formatted_address' => 'Rua 1',
+        'name'                   => 'Test Firm',
+        'formatted_address'      => 'Rua 1',
         'formatted_phone_number' => '+351 900 000 000',
-        'website' => 'https://test.pt',
-        'rating' => 4.1,
-        'user_ratings_total' => 12,
-        'geometry' => ['location' => ['lat' => 38.5, 'lng' => -9.0]],
+        'website'                => 'https://test.pt',
+        'rating'                 => 4.1,
+        'user_ratings_total'     => 12,
+        'geometry'               => ['location' => ['lat' => 38.5, 'lng' => -9.0]],
     ]);
 
     expect($details->toArray())->toBe([
-        'name' => 'Test Firm',
-        'formatted_address' => 'Rua 1',
-        'phone_number' => '+351 900 000 000',
-        'website' => 'https://test.pt',
-        'rating' => 4.1,
+        'name'               => 'Test Firm',
+        'formatted_address'  => 'Rua 1',
+        'phone_number'       => '+351 900 000 000',
+        'website'            => 'https://test.pt',
+        'rating'             => 4.1,
         'user_ratings_total' => 12,
-        'latitude' => 38.5,
-        'longitude' => -9.0,
+        'latitude'           => 38.5,
+        'longitude'          => -9.0,
     ]);
 });
 
@@ -309,13 +308,13 @@ it('toArray returns nulls for missing optional fields', function (): void {
     $details = PlaceDetails::fromArray(['name' => 'Minimal']);
 
     expect($details->toArray())->toBe([
-        'name' => 'Minimal',
-        'formatted_address' => null,
-        'phone_number' => null,
-        'website' => null,
-        'rating' => null,
+        'name'               => 'Minimal',
+        'formatted_address'  => null,
+        'phone_number'       => null,
+        'website'            => null,
+        'rating'             => null,
         'user_ratings_total' => null,
-        'latitude' => null,
-        'longitude' => null,
+        'latitude'           => null,
+        'longitude'          => null,
     ]);
 });

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace IllumaLaw\PlacesScout\DTOs;
 
-/**
- * Data Transfer Object for Google Place Search Response.
- */
 final readonly class PlaceSearchResponse
 {
     /**

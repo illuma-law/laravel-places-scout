@@ -46,10 +46,10 @@ it('performs text search successfully', function (): void {
         'maps.googleapis.com/*' => Http::response([
             'results' => [
                 [
-                    'place_id' => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
-                    'name' => 'Google Australia',
+                    'place_id'          => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+                    'name'              => 'Google Australia',
                     'formatted_address' => '48 Pirrama Rd, Pyrmont NSW 2009, Australia',
-                    'geometry' => [
+                    'geometry'          => [
                         'location' => [
                             'lat' => -33.866651,
                             'lng' => 151.195827,
@@ -58,7 +58,7 @@ it('performs text search successfully', function (): void {
                 ],
             ],
             'next_page_token' => 'next_token',
-            'status' => 'OK',
+            'status'          => 'OK',
         ]),
     ]);
 
@@ -75,7 +75,7 @@ it('performs text search with page token', function (): void {
     Http::fake([
         'maps.googleapis.com/*' => Http::response([
             'results' => [],
-            'status' => 'OK',
+            'status'  => 'OK',
         ]),
     ]);
 
@@ -94,7 +94,7 @@ it('performs text search without page token', function (): void {
     Http::fake([
         'maps.googleapis.com/*' => Http::response([
             'results' => [],
-            'status' => 'OK',
+            'status'  => 'OK',
         ]),
     ]);
 
@@ -157,13 +157,13 @@ it('gets place details successfully', function (): void {
     Http::fake([
         'maps.googleapis.com/*' => Http::response([
             'result' => [
-                'name' => 'Google Australia',
-                'formatted_address' => '48 Pirrama Rd, Pyrmont NSW 2009, Australia',
+                'name'                   => 'Google Australia',
+                'formatted_address'      => '48 Pirrama Rd, Pyrmont NSW 2009, Australia',
                 'formatted_phone_number' => '(02) 9374 4000',
-                'website' => 'https://www.google.com.au/',
-                'rating' => 4.4,
-                'user_ratings_total' => 123,
-                'geometry' => [
+                'website'                => 'https://www.google.com.au/',
+                'rating'                 => 4.4,
+                'user_ratings_total'     => 123,
+                'geometry'               => [
                     'location' => [
                         'lat' => -33.866651,
                         'lng' => 151.195827,
@@ -250,7 +250,7 @@ it('uses injected api key from constructor', function (): void {
     Http::fake([
         'maps.googleapis.com/*' => Http::response([
             'results' => [],
-            'status' => 'OK',
+            'status'  => 'OK',
         ]),
     ]);
 
@@ -266,7 +266,7 @@ it('uses api key set via withApiKey over constructor key', function (): void {
     Http::fake([
         'maps.googleapis.com/*' => Http::response([
             'results' => [],
-            'status' => 'OK',
+            'status'  => 'OK',
         ]),
     ]);
 

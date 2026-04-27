@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace IllumaLaw\PlacesScout\DTOs;
 
-/**
- * Data Transfer Object for Google Place Search Result.
- */
 final readonly class PlaceSearchResult
 {
     public function __construct(
@@ -42,20 +39,18 @@ final readonly class PlaceSearchResult
     }
 
     /**
-     * Return a snake_case array suitable for Eloquent fill or updateOrCreate.
-     *
      * @return array<string, mixed>
      */
     public function toArray(): array
     {
         return [
-            'place_id' => $this->placeId,
-            'name' => $this->name,
-            'formatted_address' => $this->formattedAddress,
-            'rating' => $this->rating,
+            'place_id'           => $this->placeId,
+            'name'               => $this->name,
+            'formatted_address'  => $this->formattedAddress,
+            'rating'             => $this->rating,
             'user_ratings_total' => $this->userRatingsTotal,
-            'latitude' => $this->latitude,
-            'longitude' => $this->longitude,
+            'latitude'           => $this->latitude,
+            'longitude'          => $this->longitude,
         ];
     }
 }

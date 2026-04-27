@@ -8,8 +8,6 @@ use IllumaLaw\PlacesScout\PlacesScoutService;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * Facade for the Places Scout service.
- *
  * @method static \IllumaLaw\PlacesScout\DTOs\PlaceSearchResponse|null textSearch(string $query, ?string $pageToken = null, ?string $location = null, ?int $radius = null, ?string $type = null, ?string $language = null)
  * @method static \IllumaLaw\PlacesScout\DTOs\PlaceDetails|null getPlaceDetails(string $placeId, ?string $fields = null)
  * @method static \IllumaLaw\PlacesScout\PlacesScoutService withApiKey(string $apiKey)

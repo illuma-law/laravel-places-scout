@@ -8,10 +8,10 @@ it('creates place search response from array with results', function (): void {
     $data = [
         'results' => [
             [
-                'place_id' => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
-                'name' => 'Google Australia',
+                'place_id'          => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+                'name'              => 'Google Australia',
                 'formatted_address' => '48 Pirrama Rd, Pyrmont NSW 2009, Australia',
-                'geometry' => [
+                'geometry'          => [
                     'location' => [
                         'lat' => -33.866651,
                         'lng' => 151.195827,
@@ -20,7 +20,7 @@ it('creates place search response from array with results', function (): void {
             ],
         ],
         'next_page_token' => 'next_token_123',
-        'status' => 'OK',
+        'status'          => 'OK',
     ];
 
     $response = PlaceSearchResponse::fromArray($data);
@@ -36,11 +36,11 @@ it('creates place search response from array with multiple results', function ()
         'results' => [
             [
                 'place_id' => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
-                'name' => 'Google Australia',
+                'name'     => 'Google Australia',
             ],
             [
                 'place_id' => 'ChIJN1t_tDeuEmsRUsoyG83frY5',
-                'name' => 'Another Place',
+                'name'     => 'Another Place',
             ],
         ],
         'status' => 'OK',
@@ -59,7 +59,7 @@ it('creates place search response from array with multiple results', function ()
 it('creates place search response with empty results', function (): void {
     $data = [
         'results' => [],
-        'status' => 'ZERO_RESULTS',
+        'status'  => 'ZERO_RESULTS',
     ];
 
     $response = PlaceSearchResponse::fromArray($data);

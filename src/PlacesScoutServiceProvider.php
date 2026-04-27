@@ -9,9 +9,6 @@ use Illuminate\Foundation\Application;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-/**
- * Service provider for the Laravel Places Scout package.
- */
 class PlacesScoutServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void

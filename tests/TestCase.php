@@ -8,9 +8,6 @@ use IllumaLaw\PlacesScout\PlacesScoutServiceProvider;
 use Illuminate\Foundation\Application;
 use Orchestra\Testbench\TestCase as Orchestra;
 
-/**
- * Base test case for the Laravel Places Scout package.
- */
 abstract class TestCase extends Orchestra
 {
     /**
